@@ -1,6 +1,8 @@
 <?php
-include_once 'Database.php';
-include_once 'RegistroTrocasHidrometros.php';
+ini_set('memory_limit', '1024M'); // Aumenta o limite de memória
+
+include_once './Database.php';
+include_once './RegistroTrocasHidrometros.php';
 
 $database = new Database();
 $db = $database->getConnection();
@@ -28,8 +30,9 @@ if ($num > 0) {
             "solservico" => base64_encode($solservico)
         );
         array_push($registros_arr["records"], $registro_item);
-    }
 
+        unset($registro_item); // Libera memória
+    }
     echo json_encode($registros_arr);
 } else {
     echo json_encode(
