@@ -76,5 +76,19 @@ $(document).ready(function() {
         }
     }
 
-    loadPage(currentPage);
+    function login() {
+        var correctCode = "isci%231";
+        var userInput = '';
+
+        while (userInput !== correctCode) {
+            userInput = prompt("Digite o código para visualizar as imagens:");
+            if (userInput !== correctCode) {
+                alert("Código incorreto! Tente novamente.");
+            } else {
+                loadPage(currentPage);
+            }
+        }
+    }
+
+    login()
 });
