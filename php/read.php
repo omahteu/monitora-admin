@@ -1,6 +1,10 @@
 <?php
 ini_set('memory_limit', '1024M'); // Aumenta o limite de memória
 
+header("Cache-Control: no-cache, no-store, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: 0");
+
 include_once './Database.php';
 include_once './RegistroTrocasHidrometros.php';
 
@@ -43,6 +47,7 @@ if ($num > 0) {
 
         unset($registro_item); // Libera memória
     }
+    header('Content-Type: application/json');
     echo json_encode($registros_arr);
 } else {
     echo json_encode(
