@@ -37,6 +37,7 @@ if ($num > 0) {
             "usuario" => $usuario,
             "os" => $os,
             "codigo" => $codigo,
+            "data" => $data,
             "testada" => $testada !== null ? base64_encode($testada) : null,
             "hretirado" => $hretirado !== null ? base64_encode($hretirado) : null,
             "hnovo" => $hnovo !== null ? base64_encode($hnovo) : null,

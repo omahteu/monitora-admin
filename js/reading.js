@@ -16,11 +16,13 @@ $(document).ready(function() {
                 registros.empty();
 
                 $.each(dados, function(index, item) {
+                    var dataHoraBrasileira = moment(item.data).format('DD/MM/YYYY HH:mm:ss');
                     var row = $('<tr>');
 
                     row.append($('<td>').text(item.usuario));
                     row.append($('<td>').text(item.os));
                     row.append($('<td>').text(item.codigo));
+                    row.append($('<td>').text(dataHoraBrasileira));
                     row.append(createImageCell(item.testada));
                     row.append(createImageCell(item.hretirado));
                     row.append(createImageCell(item.hnovo));
@@ -68,7 +70,7 @@ $(document).ready(function() {
     function createImageCell(base64String) {
         if (base64String) {
             var imageUrl = 'data:image/png;base64,' + base64String;
-            var img = $('<img>').attr('src', imageUrl).css({ width: '100px', cursor: 'pointer' });
+            var img = $('<img>').attr('src', imageUrl).css({ width: '100px', height: '100px' , cursor: 'pointer' });
             var a = $('<a>').attr('href', imageUrl).attr('download', 'image.png').append(img);
             return $('<td>').append(a);
         } else {
