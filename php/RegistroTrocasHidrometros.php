@@ -44,13 +44,14 @@ class RegistroTrocasHidrometros {
 
     public function read($offset = 0, $records_per_page = 5) {
         $query = "SELECT * FROM " . $this->table_name . " 
+                  ORDER BY data DESC 
                   LIMIT :offset, :records_per_page";
-
+    
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
         $stmt->bindParam(':records_per_page', $records_per_page, PDO::PARAM_INT);
         $stmt->execute();
-
+    
         return $stmt;
     }
 

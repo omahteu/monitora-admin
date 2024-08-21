@@ -69,9 +69,9 @@ $(document).ready(function() {
 
     function createImageCell(base64String) {
         if (base64String) {
-            var imageUrl = 'data:image/png;base64,' + base64String;
+            var imageUrl = 'data:image/webp;base64,' + base64String;
             var img = $('<img>').attr('src', imageUrl).css({ width: '100px', height: '100px' , cursor: 'pointer' });
-            var a = $('<a>').attr('href', imageUrl).attr('download', 'image.png').append(img);
+            var a = $('<a>').attr('href', imageUrl).attr('download', 'image.webp').append(img);
             return $('<td>').append(a);
         } else {
             return $('<td>').text('Sem imagem');

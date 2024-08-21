@@ -13,6 +13,17 @@ $db = $database->getConnection();
 
 $registro = new RegistroTrocasHidrometros($db);
 
+// Função para converter imagem JPEG para WebP
+function convertToWebP($jpegData) {
+    $jpegImage = imagecreatefromstring($jpegData);
+    ob_start();
+    imagewebp($jpegImage);
+    $webpData = ob_get_contents();
+    ob_end_clean();
+    imagedestroy($jpegImage);
+    return base64_encode($webpData);
+}
+
 // Obter página e limite de registros
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $records_per_page = isset($_GET['limit']) ? $_GET['limit'] : 5;
@@ -32,27 +43,25 @@ if ($num > 0) {
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         extract($row);
+        
         $registro_item = array(
             "id" => $id,
             "usuario" => $usuario,
             "os" => $os,
             "codigo" => $codigo,
             "data" => $data,
-            "testada" => $testada !== null ? base64_encode($testada) : null,
-            "hretirado" => $hretirado !== null ? base64_encode($hretirado) : null,
-            "hnovo" => $hnovo !== null ? base64_encode($hnovo) : null,
-            "cavalete" => $cavalete !== null ? base64_encode($cavalete) : null,
-            "solservico" => $solservico !== null ? base64_encode($solservico) : null
+            "testada" => $testada !== null ? convertToWebP($testada) : null,
+            "hretirado" => $hretirado !== null ? convertToWebP($hretirado) : null,
+            "hnovo" => $hnovo !== null ? convertToWebP($hnovo) : null,
+            "cavalete" => $cavalete !== null ? convertToWebP($cavalete) : null,
+            "solservico" => $solservico !== null ? convertToWebP($solservico) : null
         );
         array_push($registros_arr["records"], $registro_item);
-
-        unset($registro_item); // Libera memória
     }
+
     header('Content-Type: application/json');
     echo json_encode($registros_arr);
 } else {
-    echo json_encode(
-        array("message" => "Nenhum registro encontrado.")
-    );
+    echo json_encode(array("message" => "Nenhum registro encontrado."));
 }
 ?>
