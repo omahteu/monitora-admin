@@ -18,6 +18,10 @@ class RegistroTrocasHidrometros {
         $this->conn = $db;
     }
 
+    public function getTableName() {
+        return $this->table_name;
+    }
+
     public function create() {
         $query = "INSERT INTO " . $this->table_name . " 
                   SET usuario=:usuario, os=:os, codigo=:codigo, 
